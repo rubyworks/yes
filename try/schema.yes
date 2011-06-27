@@ -1,0 +1,10 @@
+---
+name:
+  type: str
+  pattern: '[^\n]'
+  required: true
+age:
+  type: int
+birth:
+  type: date
+

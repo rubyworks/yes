@@ -1,0 +1,46 @@
+= YES - YAML Easy Schema
+
+== DESCRIPTION
+
+It doesn't get any easier than this!
+
+It's all baout the YPath mapping to the node specifation.
+
+Here's a `schema.yes`:
+
+    ---
+    name:
+      type: str
+      pattern: '[^\n]'
+      required: true
+    age:
+      type: int
+    birth:
+      type: date
+
+Try it on `sample.yaml`.
+
+    ---
+    name: Thomas T. Thomas
+    age: 42
+    birth: 1976-07-04
+
+Using the executable.
+
+    $ yaml-yes schema.yes sample.yaml
+
+In code that is:
+
+    require 'yes'
+
+    yes = YES.new(File.new('schema.yes'))
+    yes.validate(File.new('sample.yaml'))
+
+
+== COPYRIGHTS
+
+(BSD-2 license)
+
+Copyright (c) 2011 Rubyworks, Thomas Sawyer
+
+

@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require 'yes/cli'
+YES.cli(*ARGV)
+
