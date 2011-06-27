@@ -73,10 +73,21 @@ In code that is:
     yes.validate(File.new('sample.yaml'))
 
 
-== COPYRIGHTS
+== CONTRIBUTE
+
+Cone on folks! Let's get YAML up to snuff. A good Schema could really
+help YAML go the distance and penetrate some of those "Enterpisy" worlds.
+
+* Please read, write and comment on issues[https://github.com/rubyworks/yes/issues].
+* Please critique the code.
+* Please fork and submit patches in topic branches.
+
+And please contribute to [Rubyworks Ruby Development Fund]{http://rubyworks.github.org}
+so poor Ruby OSS developers can eat :)
+
+
+== COPYRIGHT
 
 (BSD-2 license)
 
 Copyright (c) 2011 Rubyworks, Thomas Sawyer
-
-
