@@ -18,9 +18,10 @@ It doesn't get any easier than this!
 It's all about mapping YPaths to node specifations. YPath is a way to
 select nodes in a YML document. The node specifcation is a set of
 rules to which the nodes must conform. There rules are given as a mapping
-of rule type and parameter. Let take an example:
+of rule type to rule parameter. Let take an example:
 
-    people/*/name: pattern: '[^/n]'
+    people/*/name:
+      pattern: '[^/n]'
 
 This simple schema selects all nodes under a `people` sequence of
 mappings with a name key, the value of which cannot contain spaces.
