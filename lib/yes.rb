@@ -31,6 +31,8 @@ class YES
   def validate_ypath(ypath, spec)
     nodes = @tree.select(ypath)
     validate_spec(spec, nodes)
+
+    # TODO: how to handle sub-paths?
     spec.each do |r, s|
       if r[0,1] =~ /\W/
         rel_ypath = ypath + r
@@ -104,14 +106,27 @@ class YES
 
   #
   def type_match(node, type)
-    node_type = node.type_id.split(':').last
+    type_id = fixed_type_id(node)
+   
+    node_type = type_id.split(':').last
     pick_type = TYPE_MATCH[type] || [type]
     pick_type.any?{ |t| t == node_type }
   end
 
   #
+  def fixed_type_id(node)
+    type_id = node.type_id
+    if type_id
+      type_id
+    else
+      node.kind.to_s
+    end
+  end
+
+  #
   TYPE_MATCH = {
-    'date' => ['timestamp#ymd']
+    'date' => ['timestamp#ymd'],
+    'bool' => ['bool#no', 'bool#yes']
   }
 
 end
