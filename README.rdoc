@@ -1,5 +1,10 @@
 = YES - YAML Easy Schema
 
+Author:: Thomas Sawyer
+License:: BSD-2-Clause
+Copyright:: (c) 2011 Rubyworks, Thomas Sawyer
+
+
 == DESCRIPTION
 
 YES is a schema system for YAML.
@@ -8,7 +13,6 @@ YES is a schema system for YAML.
 == LIMITATIONS
 
 * It is difficult to make inverse assertions. Such as "no other map keys are allowed".
-* It is also difficult to correlate entries, e.g. "node A can't be present if there is a node B".
 
 
 == SYNOPSIS
