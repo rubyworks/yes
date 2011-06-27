@@ -1,12 +1,47 @@
-= YES - YAML Easy Schema
+= YES - YAML Easy Schemas
 
 == DESCRIPTION
 
+YES is a schema system for YAML.
+
+
+== LIMITATIONS
+
+* It is difficult to make inverse assertions. Such as "no other map keys are allowed".
+* It is also difficult to correlate entriess, e.g. "node A can't be present if there is a node B".
+
+
+== SYNOPSIS
+
 It doesn't get any easier than this!
 
-It's all baout the YPath mapping to the node specifation.
+It's all about mapping YPaths to node specifations. YPath is a way to
+select nodes in a YML document. The node specifcation is a set of
+rules to which the nodes must conform. There rules are given as a mapping
+of rule type and parameter. Let take an example:
 
-Here's a `schema.yes`:
+    people/*/name: pattern: '[^/n]'
+
+This simple schema selects all nodes under a `people` sequence of
+mappings with a name key, the value of which cannot contain spaces.
+In other words:
+
+    --
+    people:
+      - name: Charlie Adams
+      - name: Julie Ann Rose
+
+Would satisify the schema. But,
+
+    --
+    people:
+      - name: |
+          Charlie
+          Adams
+
+Would not.
+
+To use on the command line. Say we have a `schema.yes` file:
 
     ---
     name:
