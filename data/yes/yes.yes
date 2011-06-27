@@ -1,0 +1,21 @@
+---
+/*:
+  type: map
+
+/*/type:
+  type: str
+
+/*/required:
+  type: bool
+  required: false
+
+/*/range:
+  type: str
+  pattern: '^\d+\.\.(\d+|n)$'
+
+/*/pattern:
+  type: str
+
+/*/fnmatch:
+  type: str
+
