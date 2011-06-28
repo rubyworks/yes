@@ -1,0 +1,8 @@
+--output-dir site/doc
+--title YES
+--protected
+--private
+lib/
+-
+qed/**/*.md
+[A-Z][A-Z]*
