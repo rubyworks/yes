@@ -1,0 +1,43 @@
+---
+/!<tag:clarkevans.com,2002:invoice>:
+  invoice: &mandatoryint 
+     type: int
+     required: true #Shouldn't we use booleans like true and false? 
+  date:
+     type: datetime #Indicate somehow that dates are required, buttimes are not? 
+     required: true 
+  bill-to: &billing-schema-alias 
+     type: map 
+     required: true 
+     value: # We could refer to this by Ypaths, but it feels more natural to embed in it the parent structure schema 
+       given: &amms # Short for "All Mandatory Strings Schema" 
+         type: str 
+         required: true 
+       family: *amms 
+       address:
+           type: map 
+           required: true 
+           value:
+               lines: *amms 
+               city: *amms # Or suburb. 
+               state: &aoss # Short for "All Optional Strings Schema" 
+                   type: string 
+                   required: false # Not every country has states or provinces. 
+               country: &aoss # Unnecessary if posting in the same country. 
+               postal: &aoss # Some countries don't use postcodes. 
+  ship-to: *billing-schema-alias # Yay for anchors and aliases! 
+  tax: &currency # Should indicate two decimal places - no more, no less. 
+    type: float 
+    required: true 
+  total: *currency 
+  comments: *amms 
+  product: 
+      type: seqorsing: # See below 
+      required: true 
+      value: 
+        sku: *amms 
+        quantity: *mandatoryint 
+        description: *amms 
+        price: *currency 
+...
+

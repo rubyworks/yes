@@ -1,0 +1,41 @@
+---
+/:
+  tag: <tag:clarkevans.com,2002:invoice>
+invoice: &mandatoryint 
+  type: int
+  required: true
+date:
+  type: date
+  required: true 
+bill-to: &billing-schema-alias 
+  type: map 
+  required: true
+bill-to/given: &amms # Short for "All Mandatory Strings Schema" 
+  type: str 
+  required: true 
+bill-to/family: *amms 
+bill-to/address:
+  type: map 
+  required: true
+bill-to/address/lines: *amms 
+bill-to/address/city: *amms # Or suburb. 
+bill-to/address/state: &aoss # Short for "All Optional Strings Schema" 
+  type: string 
+  required: false # Not every country has states or provinces. 
+bill-to/address/country: &aoss # Unnecessary if posting in the same country. 
+bill-to/address/postal: &aoss  # Some countries don't use postcodes. 
+ship-to: *billing-schema-alias # Yay for anchors and aliases! 
+tax: &currency # Should indicate two decimal places - no more, no less. 
+  type: float 
+  required: true 
+total: *currency 
+comments: *amms 
+product: 
+  type: seqorsing: # See below 
+  required: true 
+product/sku: *amms 
+product/quantity: *mandatoryint 
+product/description: *amms 
+product/price: *currency 
+...
+
