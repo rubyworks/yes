@@ -44,17 +44,19 @@ module YES
       when /^(.*)\.\.(n|N)$/
         value >= $1.to_f
       when /^(.*)\.\.\.(.*)$/
-        value >= $1.to_f && value > $3.to_f
+        value >= $1.to_f && value < $2.to_f
       when /^(.*)\.\.(.*)$/
-        value >= $1.to_f && value >= $3.to_f
+        value >= $1.to_f && value <= $2.to_f
       when /^\[(.*)\,(.*)\]$/
-        value >= $1.to_f && value >= $2.to_f
+        value >= $1.to_f && value <= $2.to_f
       when /^\[(.*)\,(.*)\)$/
-        value >= $1.to_f && value > $2.to_f
+        value >= $1.to_f && value < $2.to_f
       when /^\((.*)\,(.*)\]$/
-        value > $1.to_f && value > $2.to_f
+        value > $1.to_f && value <= $2.to_f
       when /^\((.*)\,(.*)\)$/
-        value > $1.to_f && value > $2.to_f
+        value > $1.to_f && value < $2.to_f
+      else # assume range is just a number
+        range.to_f == value.to_f
       end
     end
 
