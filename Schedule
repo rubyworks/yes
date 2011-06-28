@@ -1,0 +1,70 @@
+---
+gem:
+  service: Gem
+  active : true
+
+dnote:
+  service  : DNote
+  labels   : ~
+  output   : log/dnote.rdoc
+  active   : true
+
+dnote-site:
+  service  : DNote
+  labels   : ~
+  output   : site/log/dnote.html
+  active   : false
+
+#stats:
+#  service  : Stats
+#  title    : ~
+#  loadpath : ~
+#  exclude  : ~
+#  output   : site/log/stats/
+#  active   : true
+
+yard:
+  yardopts: true
+  active  : true
+
+qedoc:
+  output : site/qed
+  title  : YES
+  files  : qed/**/*.rdoc
+  active : true
+
+qed:
+  files    : qed/**/*.md
+  loadpath : [lib]
+  requires : ~
+  live     : false   
+  active   : false
+
+grancher:
+  service: Grancher
+  active: true
+  #sitemap:
+  #  - site
+  #  - [doc/rdoc, rdoc]
+  #  - [doc/qedoc, qedoc]
+
+email:
+  service : Email
+  file    : ~
+  subject : ~
+  mailto  : ruby-talk@ruby-lang.org
+#  from    : transfire@gmail.com
+#  server  : <%= ENV['EMAIL_SERVER'] %>
+#  port    : <%= ENV['EMAIL_PORT'] %>
+#  account : <%= ENV['EMAIL_ACCOUNT'] %>
+#  domain  : <%= ENV['EMAIL_DOMAIN'] %>
+#  login   : <%= ENV['EMAIL_LOGIN'] %>
+#  secure  : <%= ENV['EMAIL_SECURE'] %>
+  active  : true
+
+#vclog:
+#  service  : VClog
+#  output   : log/history.html
+#  type     : history
+#  active   : false
+
