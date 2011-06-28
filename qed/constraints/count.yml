@@ -1,0 +1,20 @@
+---
+schema: |
+  ---
+  //foo:
+    count: 1
+data: |
+  ---
+  foo: true
+assert: []
+---
+schema: |
+  ---
+  //foo:
+    count: 1
+data: |
+  ---
+  - foo: true
+  - foo: true
+assert: []
+
