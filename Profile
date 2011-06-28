@@ -1,4 +1,33 @@
 ---
 name: yaml-yes
+title: YES
 version: 0.0.1
+
+summary: YAML Easy Schema
+license: BSD-2-Clause
+contact: transfire@gmail.com
+created: 2011-06-21
+
+requires:
+  - qed (test)
+  - detroit (build)
+
+authors:
+  - Thomas Sawyer
+
+description:
+  YAML Easy Schemas it a straight-foward but powerful
+  YPath-based schema format and validation program for
+  YAML documents.
+
+resources:
+  homepage    : http://rubyworks.github.com/yes
+  development : http://github.com/rubyworks/yes
+  mailinglist : http://groups.google.com/group/rubyworks-mailinglist
+
+repositories:
+  public: git://github.com/rubyworks/yes.git
+
+organization : RubyWorks
+copyright    : Copyright (c) 2011 Thomas Sawyer
 
