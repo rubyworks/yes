@@ -14,7 +14,7 @@ And a YAML document that hasthe required path:
 Then validation of the YAML document with the schema will
 ve valid and retun no validation errors.
 
-    yes = YES.new(@schema)
+    yes = YES::Lint.new(@schema)
     yes.validate(@yaml).assert.empty?
 
 If given a YAML document that lacks the required path: 

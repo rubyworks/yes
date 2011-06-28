@@ -16,7 +16,7 @@ And a YAML document that has that number of nodes:
 Then validation of the YAML document with the schema will
 ve valid and retun no validation errors.
 
-    yes = YES.new(@schema)
+    yes = YES::Lint.new(@schema)
     errors = yes.validate(@yaml)
     errors.assert.empty?
 
@@ -47,7 +47,7 @@ And a YAML document that has that range of nodes:
 Then validation of the YAML document with the schema will
 ve valid and retun no validation errors.
 
-    yes = YES.new(@schema)
+    yes = YES::Lint.new(@schema)
     errors = yes.validate(@yaml)
     errors.assert.empty?
 
@@ -80,9 +80,9 @@ And a YAML document that has such a range of nodes:
     - foo: true
 
 Then validation of the YAML document with the schema will
-ve valid and retun no validation errors.
+be valid and retun no validation errors.
 
-    yes = YES.new(@schema)
+    yes = YES::Lint.new(@schema)
     errors = yes.validate(@yaml)
     errors.assert.empty?
 
@@ -102,7 +102,7 @@ The above covers the basics of count constraints. The following
 will test a large set of count scenarios stored in [count.yml](count.yml).
 
     Table('count.yml', :stream=>true) do |set|
-      yes = YES.new(set['schema'])
+      yes = YES::Lint.new(set['schema'])
       errors = yes.validate(set['data'])
       errors.assert == set['assert']
     end
