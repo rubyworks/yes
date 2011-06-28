@@ -1,13 +1,13 @@
 require 'yes'
 
-class YES
+module YES
 
   def self.cli(*argv)
     schema_file = argv[0]
     target_file = argv[1]
 
-    validator = new(File.new(schema_file))
-    edit = validator.validate(File.new(target_file))
+    lint = Lint.new(File.new(schema_file))
+    edit = lint.validate(File.new(target_file))
 
     if edit.size == 0
       #$stderr.puts "valid: #{target_file}"
