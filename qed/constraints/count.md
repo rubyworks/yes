@@ -99,7 +99,7 @@ Then the validation will return errors.
 TODO: more detailed assertions on returned errors list.
 
 The above covers the basics of count constraints. The following
-will test a large set of count scenarios stored in {count.yml}[count.yml].
+will test a large set of count scenarios stored in [count.yml](count.yml).
 
     Table('count.yml', :stream=>true) do |set|
       yes = YES.new(set['schema'])
