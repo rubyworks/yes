@@ -54,7 +54,8 @@ class YES
   def validate_spec(spec, nodes)
     validate_required  spec, nodes
     validate_exclusive spec, nodes
-    validate_range     spec, nodes
+    validate_count     spec, nodes
+    validate_length    spec, nodes
     validate_type      spec, nodes
     validate_pattern   spec, nodes
     validate_fnmatch   spec, nodes
@@ -65,9 +66,8 @@ class YES
   # is a string, it is taken to be a ypath selection, such that if the
   # main selection is not empty then this sub-selection cannot be either.
   def validate_required(spec, nodes)
-    return unless spec['required']
-    required = spec['required']
-    case requried
+    return unless required = spec['required']
+    case required
     when true, false, nil
       if nodes.empty?
         @edit << ['required', spec]
@@ -80,24 +80,10 @@ class YES
     end
   end
 
-  # Validate range ensure there is a minimum and/or maximum
-  # number of matching nodes.
-  def validate_range(spec, nodes)
-    return unless spec['range']
-    min, max = spec['range'].split('..')
-    if nodes.size < min.to_i
-      @edit << ['range', spec, nodes.size]
-    end
-    next if max == 'n'
-    if nodes.size > max.to_i
-      @edit << ['range', spec, nodes.size]
-    end
-  end
-
   # Validate exclusion - This can either be a boolean expression in
-  # which case it validates that there is no more than one mathcing
+  # which case it validates that there is no more than one matching
   # node. Otherwise, the value is taken to be a ypath and validates
-  # that there a no matching paths if the main selection is present.
+  # that there are no matching paths if the main selection is present.
   def validate_exclusive(spec, nodes)
     return unless spec['exclusive']
     exclusive = spec['exclusive']
@@ -110,6 +96,57 @@ class YES
       ex_nodes = @tree.select(exclusive)
       if nodes.size > 1 && ex_nodes.size > 1
         @edit << ['exclusive', spec, ex_nodes.size]  # maybe generalized ex_nodes instead of size?
+      end
+    end
+  end
+
+  # Validate count ensure there is a minimum and/or maximum
+  # number of matching nodes.
+  def validate_count(spec, nodes)
+    return unless spec['count']
+    min, max = spec['count'].to_s.split('..')
+    max = min if max.nil?
+    if nodes.size < min.to_i
+      @edit << ['count-min', spec, nodes.size]
+    end
+    return if max == 'n' or max == 'N'
+    if nodes.size > max.to_i
+      @edit << ['count-max', spec, nodes.size]
+    end
+  end
+
+  # Validate if a node is the only one of it's value in a sequence
+  # or mapping.
+  def validate_unique(spec, nodes)
+    return unless unique = spec['unique']
+    # TODO: how to do?
+  end
+
+  # Validate if a node value is within a certain length.
+  # The value is converted to a string using #to_s for the
+  # comparison.
+  def validate_length(spec, nodes)
+    return unless length = spec['length']
+    min, max = length.split('..')
+    nodes.each do |node|
+      node_length = node.value.to_s.length
+      if node_length < min.to_i
+        @edit << ['length', spec, catholic_node(node)]
+      end
+      next if max == 'n' or max == 'N'
+      if node_length > max.to_i
+        @edit << ['length', spec, catholic_node(node)]
+      end
+    end
+  end
+
+  # Validate that a node's value is amoung a provided
+  # list of values.
+  def validate_value(spec, nodes)
+    return unless values = spec['values']
+    nodes.each do |node|
+      if !values.include?(node.value)
+        @edit << ['values', spec, catholic_node(node)]
       end
     end
   end
@@ -196,8 +233,9 @@ class YES
 
   #
   TYPE_MATCH = {
-    'date' => ['timestamp#ymd'],
-    'bool' => ['bool#no', 'bool#yes']
+    'date'   => ['timestamp#ymd'],
+    'bool'   => ['bool#no', 'bool#yes'],
+    'number' => ['int', 'float']
   }
 
 end
