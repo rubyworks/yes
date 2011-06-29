@@ -9,17 +9,19 @@ module YES
   class FnmatchValidation < NodeValidation
 
     #
+    # @return [Boolean] validity
     def valid?
       return true unless applicable?
       File.fnmatch(fnmatch, node.value.to_s)
     end
 
     #
+    # @return [String] fnmatch pattern
     def fnmatch
       spec['fnmatch']
     end
 
-    #
+    # Only applicable if `fnmatch` field is in spec.
     def self.applicable?(spec)
       spec['fnmatch']
     end

@@ -1,9 +1,16 @@
 module YES
 
-  #
+  # Validate inclusion. This can either be a boolean expression in
+  # which case it validates that there is at least one matching
+  # node. Otherwise, the value is taken to be a ypath and validates
+  # that there are matching paths if the main selection is present.
+  #--
+  # TODO: Provide $parent$ path substitution ?
+  #++
   class InclusiveValidation < TreeValidation
 
     #
+    # @return [Boolean] validity
     def valid?
       return true unless applicable?
 
@@ -18,7 +25,7 @@ module YES
       end
     end
 
-    #
+    # Only applicable if `inclusive` field in in the spec.
     def self.applicable?(spec)
       spec['inclusive']
     end

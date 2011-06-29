@@ -1,11 +1,24 @@
 module YES
 
-  # Takesa list to YPath, usually relative YPaths and ensures
-  # they are present. This is most useful for ensuring the existance
-  # ot mapping fields.
+  # Takes a list of relative YPaths and ensures they are present.
+  # This is most useful for ensuring the existance of mapping fields.
+  #
+  #     foo:
+  #       requires:
+  #         - bar
+  #
+  # A valid document would be:
+  #
+  #     foo:
+  #       bar: true
+  #
+  # The literal meaing of this example is "if `foo` exists, the make sure
+  # `foo/bar` also exists.
+  #
   class RequiresValidation < NodeValidation
 
     #
+    # @return [Boolen] validity
     def valid?
       return true unless applicable?
 
@@ -16,8 +29,7 @@ module YES
         when /^\// # absolute path
           rq_nodes = tree.select(rq)
         else
-          yp = File.join(ypath, rq)
-          rq_nodes = tree.select(yp)
+          rq_nodes = node.select(rq)
         end
         return false unless rq_nodes.size > 0
       end

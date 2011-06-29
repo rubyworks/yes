@@ -1,9 +1,15 @@
 module YES
 
-  # TODO: For the moment this is the same as Inclusive, but I don't think that is right.
+  #
+  # TODO: For the moment this is the same as Inclusive.
+  #       It was originall inteded to work like {RequiresValidation}
+  #       but it rpoved hard to work out the validation procedure
+  #       when matching to the subfield. If we can fix it maybe we will
+  #       keep, but for now THIS IS NOT USED.
   class RequiredValidation < TreeValidation
 
     #
+    # @return [Boolean] validity
     def valid?
       return true unless applicable?
 
@@ -18,7 +24,7 @@ module YES
       end
     end
 
-    #
+    # Only applicable if `required` field appears in spec.
     def self.applicable?(spec)
       spec['required']
     end
