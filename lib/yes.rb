@@ -17,8 +17,7 @@ require 'yes/validations/length_validation'
 require 'yes/validations/range_validation'
 require 'yes/validations/regexp_validation'
 require 'yes/validations/fnmatch_validation'
-
-require 'yes/validations/required_validation'
+require 'yes/validations/requires_validation'
 
 require 'yes/validations/inclusive_validation'
 require 'yes/validations/exclusive_validation'

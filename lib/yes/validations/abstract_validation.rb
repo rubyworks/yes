@@ -3,7 +3,22 @@ module YES
   class AbstractValidation
 
     #
+    def initialize(ypath, spec, tree)
+      @ypath = ypath
+      @spec  = spec
+      @tree  = tree
+    end
+
+  public
+
+    # 
+    attr :ypath
+
+    # 
     attr :spec
+
+    #
+    attr :tree
 
     #
     def valid?

@@ -4,13 +4,12 @@ module YES
   class NodeValidation < AbstractValidation
 
     #
-    def initialize(spec, node)
-      @spec = spec
+    def initialize(ypath, spec, tree, node)
+      super(ypath, spec, tree)
       @node = node
     end
 
-    #
-    attr :spec
+  public
 
     #
     attr :node

@@ -2,21 +2,16 @@ module YES
 
   class TreeValidation < AbstractValidation
 
-    # 
-    attr :spec
+    #
+    def initialize(ypath, spec, tree, nodes)
+      super(ypath, spec, tree)
+      @nodes = nodes
+    end
+
+  public
 
     #
     attr :nodes
-
-    #
-    attr :tree
-
-    #
-    def initialize(spec, nodes, tree)
-      @spec  = spec
-      @nodes = nodes
-      @tree  = tree
-    end
 
   end
 

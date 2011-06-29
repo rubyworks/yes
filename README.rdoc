@@ -1,8 +1,8 @@
 = YES - YAML Easy Schema
 
-[Author] Thomas Sawyer
-[License] BSD-2-Clause
-[Copyright] (c) 2011 Rubyworks, Thomas Sawyer
+Author:: Thomas Sawyer
+License:: BSD-2-Clause
+Copyright:: (c) 2011 Rubyworks, Thomas Sawyer
 
 
 == DESCRIPTION
