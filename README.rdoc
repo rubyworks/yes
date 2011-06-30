@@ -5,27 +5,35 @@ License:: BSD-2-Clause
 Copyright:: (c) 2011 Rubyworks, Thomas Sawyer
 
 
-== DESCRIPTION
-
-YES is a schema system for YAML.
-
-
-== LIMITATIONS
-
-* It is difficult to make inverse assertions. Such as "no other map keys are allowed".
-
-
-== SYNOPSIS
+== SALES PITCH
 
 It doesn't get any easier than this!
 
-It's all about mapping YPaths to node specifications. YPath is a way to
-select nodes in a YML document. The node specif cation is a set of
-rules to which the nodes must conform. There rules are given as a mapping
-of rule type to rule parameter. Let take an example:
+YES is a schema system for YAML that intuitve and extremely powerful.
+
+YES Schemas are also YAML documents, so they eat there own dog food.
+
+
+== HOW IT WORKS
+
+The design of YeS is as simple as it is powerful. A YeS schema is composed
+of YPath selectors mapped to document constraints. YPath is a syntax
+for selecting *nodes* from a YAML document.
+
+When validating a YAML document against a YeS schema a *lint* program
+simply collects all matching nodes with their applicable constraint into
+a *unit-validation*. Then this collection is filtered of all *passing*
+validations. All that is left are the failures. If the filtered
+list is empty the document is completely valid. If not empty, the lint
+program can provide a detailed *editorial* list of the failures.
+
+Constraints are given as a mappings of validation type to validation
+parameters.
+
+Lets take an example:
 
     people/*/name:
-      pattern: '[^/n]'
+      regexp: '[^/n]'
 
 This simple schema selects all nodes under a `people` sequence of
 mappings with a name key, the value of which cannot contain newlines.
@@ -46,12 +54,50 @@ Would satisfy the schema. But,
 
 Would not.
 
-To use on the command line. Say we have a `schema.yes` file:
+TODO: Better Eaxamples!!!
+
+Sometimes multiple constraints of the same type need to be applied to 
+a set of nodes. This can be done by rexpessing the same YPath with 
+different constraints, for example:
+
+    people/*/name:
+      regexp: '[^/t]'
+    people/*/name:
+      regexp: '[^/n]'
+
+But to make the inent more sussinct a sequence of constraints can be give
+along with the *logical-and* tag , `!!and`.
+
+    people/*/name: !!and
+      - regexp: '[^/t]'
+      - regexp: '[^/n]'
+
+If the `!!and` tag is not given, then the default operator is used, 
+*logical-or*, which can also be explicitly stated as `!!or`:
+
+    people/*/name: !!or
+      - regexp: '[^/t]'
+      - regexp: '[^/n]'
+
+In this way logical relationships of constraints can be created.
+
+    people/*/name: !!or
+      - !!and
+        - regexp: '[^/t]'
+        - regexp: '[^/n]'
+      - !!and
+        - regexp: '[^/t]'
+        - regexp: '[^/n]'
+
+
+== COMMAND LINE
+
+To use on the command line *lint* tool. Say we have a `schema.yes` file:
 
     ---
     name:
       type: str
-      pattern: '[^\n]'
+      regexp: '[^\n]'
       required: true
     age:
       type: int
@@ -74,6 +120,7 @@ In code that is:
     require 'yes'
 
     yes = YES.new(File.new('schema.yes'))
+
     yes.validate(File.new('sample.yaml'))
 
 
