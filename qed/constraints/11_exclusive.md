@@ -63,12 +63,6 @@ Then the validation will return errors.
     errors = yes.validate(@yaml)
     errors.refute.empty?
 
-The above covers the basics of exclusive constraints. The following will test
-a large set of exclusive scenarios stored in [fixtures/exclusive.yml](fixtures/exclusive.yml).
-
-    Table('fixtures/exclusive.yml', :stream=>true) do |set|
-      yes = YES::Lint.new(set['schema'])
-      errors = yes.validate(set['data'])
-      errors.assert == set['assert']
-    end
-
+That covers the basics of exclusive constraints.
+See here[../99_battery/exclusive_validations.md]
+for an exhustive battery of tests.

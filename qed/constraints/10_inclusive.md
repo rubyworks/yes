@@ -63,12 +63,3 @@ Then the validation will return errors.
     errors = yes.validate(@yaml)
     errors.refute.empty?
 
-The above covers the basics of inclusive constraints. The following will test
-a large set of inclusive scenarios stored in [fixtures/inclusive.yml](fixtures/inclusive.yml).
-
-    Table('fixtures/inclusive.yml', :stream=>true) do |set|
-      yes = YES::Lint.new(set['schema'])
-      errors = yes.validate(set['data'])
-      errors.assert == set['assert']
-    end
-

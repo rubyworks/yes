@@ -96,13 +96,3 @@ Then the validation will return errors.
 
 TODO: more detailed assertions on returned errors list.
 
-The above covers the basics of range constraints. The following
-will test a large set of range scenarios stored in [range.yml](range.yml).
-
-    Table('fixtures/range.yml', :stream=>true) do |set|
-      yes = YES::Lint.new(set['schema'])
-      errors = yes.validate(set['data'])
-      errors.assert == set['assert']
-    end
-
-QED.
