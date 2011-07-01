@@ -42,16 +42,18 @@ module YES
       validate_spec(ypath, spec)
 
       # TODO: how to handle sub-paths?
-      spec.each do |r, s|
-        if r[0,1] =~ /\W/
-          rel_ypath = ypath + r
-          rel_spec  = s
-          validate_ypath(rel_ypath, rel_spec)
-        end
-      end
+      #spec.each do |r, s|
+      #  if r[0,1] =~ /\W/
+      #    rel_ypath = ypath + r
+      #    rel_spec  = s
+      #    validate_ypath(rel_ypath, rel_spec)
+      #  end
+      #end
     end
 
     # Process all validations.
+    #
+    # FIXME: Add logic handling.
     def validate_spec(ypath, spec)
       nodes = @tree.select(ypath)
 
@@ -62,6 +64,7 @@ module YES
       validate_count     ypath, spec, nodes
       validate_length    ypath, spec, nodes
       validate_range     ypath, spec, nodes
+      validate_choice    ypath, spec, nodes
       validate_regexp    ypath, spec, nodes
       validate_fnmatch   ypath, spec, nodes
       #validate_pattern   ypath, spec, nodes
@@ -169,7 +172,11 @@ module YES
 
     # Validate that a node's value is amoung a provided
     # list of values.
-    def validate_value(ypath, spec, nodes)
+    def validate_choice(ypath, spec, nodes)
+      return unless RangeValidation.applicable?(spec)
+      nodes.each do |node|
+        @validations << ChoiceValidation.new(ypath, spec, tree, node)
+      end
     end
 
     # Validate matching values against a regular expression.
