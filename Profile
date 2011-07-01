@@ -1,5 +1,5 @@
 ---
-name: yaml-yes
+name: yes
 title: YES
 version: 0.0.1
 
