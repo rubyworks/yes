@@ -20,10 +20,10 @@ The design of YeS is as simple as it is powerful. A YeS schema is composed
 of YPath selectors mapped to document constraints. YPath is a syntax
 for selecting *nodes* from a YAML document.
 
-When validating a YAML document against a YeS schema a *lint* program
-simply collects all matching nodes with their applicable constraint into
-a *unit-validation*. Then this collection is filtered of all *passing*
-validations. All that is left are the failures. If the filtered
+When validating a YAML document against a YeS schema a "lint" program
+simply collects all matching nodes with their applicable constraints into
+a collection of *unit-validations*. Then this collection is filtered of 
+all *passing* validations. All that is left are the failures. If the filtered
 list is empty the document is completely valid. If not empty, the lint
 program can provide a detailed *editorial* list of the failures.
 
