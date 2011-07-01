@@ -7,15 +7,16 @@ github: {}
 dnote:
   service  : DNote
   labels   : ~
-  output   : log/dnote.rdoc
+  output   : log/DNOTE.md
 
 yard:
   yardopts: true
+  priority: -1
 
 qedoc:
-  output : doc/QED.rdoc
   title  : YES
-  files  : qed/**/*.rdoc
+  files  : qed/**/*.md
+  output : QED.rdoc
 
 qed:
   files    : qed/**/*.md
