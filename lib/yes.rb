@@ -1,5 +1,13 @@
 module YES
 
+  # Simple validatily check.
+  #
+  # @return [Boolean]
+  def self.valid?(schema, yaml)
+    yes = YES::Lint.new(@schema)
+    yes.validate(@yaml).empty? 
+  end
+
 end
 
 #
