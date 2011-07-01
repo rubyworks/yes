@@ -26,6 +26,19 @@ module YES
       node.value
     end
 
+#    # Covert a YAML node (Syck) node into a generic representation.
+#    #
+#    # TODO: Should `style` be part of this? Also, is `kind` the proper term?
+#    def catholic_node(node)
+#      n = {}
+#      n['tag']   = node.type_id 
+#      #n['type'] = #base_type_id(node)
+#      n['kind']  = node.kind.to_s
+#      n['value'] = node.value
+#      n['style'] = node.instance_variable_get('@style').to_s
+#      n
+#    end
+
   end
 
 end

@@ -71,55 +71,6 @@ module YES
     #  # TODO: how to do?
     #end
 
-=begin
-    # -- support methods --------------------------------------------------------
-
-    # Covert a YAML node (Syck) node into a generic representation.
-    #
-    # TODO: Should `style` be part of this? Also, is `kind` the proper term?
-    def catholic_node(node)
-      n = {}
-      n['tag']   = node.type_id 
-      #n['type'] = #base_type_id(node)
-      n['kind']  = node.kind.to_s
-      n['value'] = node.value
-      n['style'] = node.instance_variable_get('@style').to_s
-      n
-    end
-
-    # @param range [Array, String]
-    #   The range representation.
-    #
-    # @example
-    #   [1,1] =~ 1
-    #   [1,2) =~ 1
-    #   (1,2] =~ 2
-    #   (1,3) =~ 2
-    #
-    def match_range(range, value)
-      case range
-      when Array  # array can do string comparisons
-        value > range.first && value < range.last
-      when /^(.*)\.\.\.(n|N)$/
-        value >= $1.to_f
-      when /^(.*)\.\.(n|N)$/
-        value >= $1.to_f
-      when /^(.*)\.\.\.(.*)$/
-        value >= $1.to_f && value > $3.to_f
-      when /^(.*)\.\.(.*)$/
-        value >= $1.to_f && value >= $3.to_f
-      when /^\[(.*)\,(.*)\]$/
-        value >= $1.to_f && value >= $2.to_f
-      when /^\[(.*)\,(.*)\)$/
-        value >= $1.to_f && value > $2.to_f
-      when /^\((.*)\,(.*)\]$/
-        value > $1.to_f && value > $2.to_f
-      when /^\((.*)\,(.*)\)$/
-        value > $1.to_f && value > $2.to_f
-      end
-    end
-=end
-
   end
 
 end
