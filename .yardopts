@@ -1,8 +1,8 @@
---output-dir site/doc
+--output-dir doc/yard
 --title YES
 --protected
 --private
 lib/
 -
-qed/**/*.md
 [A-Z][A-Z]*
+log/*.rdoc
