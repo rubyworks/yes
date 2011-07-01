@@ -1,12 +1,13 @@
-#!mast bin data qed lib [A-Z][A-Z]*
+#!mast bin data qed lib [A-Z]*.*
 bin/yes-lint
 data/yes/yes.yes
+qed/constraints/01_overview.md
+qed/constraints/02_count.md
+qed/constraints/03_requires.md
 qed/constraints/applique/yes.rb
-qed/constraints/count.md
-qed/constraints/count.yml
+qed/constraints/fixtures/count.yml
 qed/constraints/required.md
 lib/yes/cli.rb
-lib/yes/edit.rb
 lib/yes/genclass.rb
 lib/yes/lint.rb
 lib/yes/validations/abstract_validation.rb
@@ -19,10 +20,12 @@ lib/yes/validations/node_validation.rb
 lib/yes/validations/range_validation.rb
 lib/yes/validations/regexp_validation.rb
 lib/yes/validations/required_validation.rb
+lib/yes/validations/requires_validation.rb
 lib/yes/validations/tag_validation.rb
 lib/yes/validations/tree_validation.rb
 lib/yes/validations/type_validation.rb
 lib/yes.rb
 README.rdoc
-BSD-2-Clause.txt
-COPYING.rdoc
+QED.rdoc
+LICENSE.rdoc
+THANKS.rdoc

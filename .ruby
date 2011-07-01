@@ -1,40 +1,41 @@
 --- 
-spec_version: 1.0.0
-replaces: []
-
+name: "true"
+version: 0.0.1
+title: "true"
+summary: YAML Easy Schema
+description: YAML Easy Schemas it a straight-foward but powerful YPath-based schema format and validation program for YAML documents.
 loadpath: 
 - lib
-name: yaml-yes
-repositories: 
-  public: git://github.com/rubyworks/yes.git
+manifest: Manifest.txt
+requires: 
+- name: qed
+  version: 0+
+  group: 
+  - test
+- name: detroit
+  version: 0+
+  group: 
+  - build
 conflicts: []
+
+replaces: []
 
 engine_check: []
 
-title: "true"
+organization: RubyWorks
 contact: transfire@gmail.com
-resources: 
-  mail: http://groups.google.com/group/rubyworks-mailinglist
-  home: http://rubyworks.github.com/yes
-  work: http://github.com/rubyworks/yes
-maintainers: []
-
-requires: 
-- group: 
-  - test
-  name: qed
-  version: 0+
-- group: 
-  - build
-  name: detroit
-  version: 0+
-version: 0.0.1
+created: 2011-06-21
+copyright: Copyright (c) 2011 Thomas Sawyer
 licenses: 
 - BSD-2-Clause
-copyright: Copyright (c) 2011 Thomas Sawyer
 authors: 
 - Thomas Sawyer
-organization: RubyWorks
-description: YAML Easy Schemas it a straight-foward but powerful YPath-based schema format and validation program for YAML documents.
-summary: YAML Easy Schema
-created: 2011-06-21
+maintainers: []
+
+resources: 
+  home: http://rubyworks.github.com/yes
+  work: http://github.com/rubyworks/yes
+  mail: http://groups.google.com/group/rubyworks-mailinglist
+repositories: 
+  public: git://github.com/rubyworks/yes.git
+spec_version: 1.0.0
