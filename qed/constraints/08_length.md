@@ -1,17 +1,17 @@
-## Count Constraint
+## Length Constraint
 
-### Fixed Count
+### Fixed Length
 
-Given a schema with a `count` constraint using a single number:
+Given a schema with a `length` constraint using a single number:
 
     ---
     //foo:
-      count: 1
+      length: 1
 
 And a YAML document that has that number of nodes:
 
     ---
-    - foo: true
+    - foo: "A"
 
 Then validation of the YAML document with the schema will
 ve valid and retun no validation errors.
@@ -23,8 +23,7 @@ ve valid and retun no validation errors.
 If given a YAML document that lacks the right number of nodes: 
 
     ---
-    - foo: true
-    - foo: true
+    - foo: "AB"
 
 Then the validation will return errors.
 
@@ -33,7 +32,7 @@ Then the validation will return errors.
 
 ### Range
 
-Given a schema with a `count` constraint using a fixed range:
+Given a schema with a `length` constraint using a fixed range:
 
     ---
     //foo:
@@ -42,7 +41,8 @@ Given a schema with a `count` constraint using a fixed range:
 And a YAML document that has that range of nodes:
 
     ---
-    - foo: true
+    - foo: "A"
+    - foo: "AB"
 
 Then validation of the YAML document with the schema will
 ve valid and retun no validation errors.
@@ -54,9 +54,8 @@ ve valid and retun no validation errors.
 If given a YAML document that lacks the right number of nodes: 
 
     ---
-    - foo: true
-    - foo: true
-    - foo: true
+    - foo: ""
+    - foo: "ABC"
 
 Then the validation will return errors.
 
@@ -65,7 +64,7 @@ Then the validation will return errors.
 
 ### Range N
 
-Given a schema with a `count` constraint using a range from a fixed number
+Given a schema with a `length` constraint using a range from a fixed number
 to `n`, respesenting infinity:
 
     ---
@@ -75,9 +74,8 @@ to `n`, respesenting infinity:
 And a YAML document that has such a range of nodes:
 
     ---
-    - foo: true
-    - foo: true
-    - foo: true
+    - foo: "AB"
+    - foo: "ABC"
 
 Then validation of the YAML document with the schema will
 be valid and retun no validation errors.
@@ -89,7 +87,7 @@ be valid and retun no validation errors.
 If given a YAML document that lacks the right number of nodes: 
 
     ---
-    - foo: true
+    - foo: "A"
 
 Then the validation will return errors.
 
@@ -98,10 +96,10 @@ Then the validation will return errors.
 
 TODO: more detailed assertions on returned errors list.
 
-The above covers the basics of count constraints. The following
-will test a large set of count scenarios stored in [count.yml](count.yml).
+The above covers the basics of length constraints. The following will test
+a large set of length scenarios stored in [fixtures/length.yml](fixtures/length.yml).
 
-    Table('fixtures/count.yml', :stream=>true) do |set|
+    Table('fixtures/length.yml', :stream=>true) do |set|
       yes = YES::Lint.new(set['schema'])
       errors = yes.validate(set['data'])
       errors.assert == set['assert']
