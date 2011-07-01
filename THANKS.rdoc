@@ -1,0 +1,10 @@
+= SPECIAL THANKS
+
+== Kwaify
+
+Copyright:: (c) 2011 Rubyworks, Thomas Sawyer
+License:: MIT
+Website:: http://www.kuwata-lab.com/kwalify/
+
+Although no Kwalify code was actually used to build YES, it provided
+inspiration for some of the design choices.
