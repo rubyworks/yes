@@ -12,7 +12,7 @@ module YES
     # @return [Boolean] validity
     def valid?
       return true unless applicable?
-      File.fnmatch(fnmatch, node.value.to_s)
+      File.fnmatch(fnmatch, node.value)
     end
 
     #

@@ -12,7 +12,7 @@ module YES
     # @return [Boolean] validity
     def valid?
       return true unless applicable?
-      regexp =~ node.value.to_s
+      regexp =~ node.value
     end
 
     # The regular expression from `spec`.
