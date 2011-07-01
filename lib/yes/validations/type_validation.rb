@@ -3,15 +3,38 @@ module YES
   #
   class TypeValidation < NodeValidation
 
+    # Validate the <i>tag type</i>. This ensure all the matching nodes
+    # have the same base type specified. The tag type is the portion
+    # of the tag the occcurs after the last non-alphanumeric character,
+    # usually a `:`. In essence the tag type is the tag regardless of namespace.
+    # 
+    # Also, `#` is treated specially as a subset fo they type, so it will
+    # be used if given in the type comparison.
     #
-    def valid?
-      return true unless applicable?
-      type_match(node, spec['type'])
-    end
+    # @example
+    #   'foo' =~ '!!foo'
+    #   'foo' =~ '!<tag:foo.org/bar:foo>'
+    #   'foo' =~ '!<tag:foo.org/bar:foo>'
+    #   'foo' =~ '!!foo#alt'
+    #   'foo#alt' =~ '!!foo#alt'
+    #
+    # @return [Array<Validaiton>]
+    def self.validate(ypath, spec, tree, nodes)
+      return [] unless applicable?(spec)
+      nodes.map do |node|
+        new(ypath, spec, tree, node)
+      end
+    end  
 
     #
     def self.applicable?(spec)
       spec['type']
+    end
+
+    #
+    def valid?
+      return true unless applicable?
+      type_match(node, spec['type'])
     end
 
     private

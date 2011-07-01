@@ -11,6 +11,22 @@ module YES
   # Valid values for are then only A, B, C, D, E, F and G.
   class RangeValidation < NodeValidation
 
+    # Validate if a node is the only one of it's value in a sequence
+    # or mapping.
+    #
+    # @return [Array<Validaiton>]
+    def self.validate(ypath, spec, tree, nodes)
+      return [] unless applicable?(spec)
+      nodes.map do |node|
+        new(ypath, spec, tree, node)
+      end
+    end
+
+    #
+    def self.applicable?(spec)
+      spec['range']
+    end
+
     #
     # @return [Boolean] validity
     def valid?
@@ -21,11 +37,6 @@ module YES
 
     #
     def range
-      spec['range']
-    end
-
-    #
-    def self.applicable?(spec)
       spec['range']
     end
 

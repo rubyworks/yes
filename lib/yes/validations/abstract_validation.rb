@@ -1,6 +1,22 @@
 module YES
 
+  #
+  def self.validators
+    @validators ||= []
+  end
+
+  #
   class AbstractValidation
+
+    #
+    def self.inherited(base)
+      YES.validators << base
+    end
+
+    # noop
+    def self.validate(ypath, spec, tree, nodes)
+      []
+    end
 
     #
     def initialize(ypath, spec, tree)

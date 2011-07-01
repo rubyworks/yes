@@ -57,91 +57,11 @@ module YES
     def validate_spec(ypath, spec)
       nodes = @tree.select(ypath)
 
-      validate_type      ypath, spec, nodes
-      validate_tag       ypath, spec, nodes
-      validate_requires  ypath, spec, nodes
-      validate_exclusive ypath, spec, nodes
-      validate_count     ypath, spec, nodes
-      validate_length    ypath, spec, nodes
-      validate_range     ypath, spec, nodes
-      validate_choice    ypath, spec, nodes
-      validate_regexp    ypath, spec, nodes
-      validate_fnmatch   ypath, spec, nodes
-      #validate_pattern   ypath, spec, nodes
-    end
-
-    # Validate the <i>tag type</i>. This ensure all the matching nodes
-    # have the same base type specified. The tag type is the portion
-    # of the tag the occcurs after the last non-alphanumeric character,
-    # usually a `:`. In essence the tag type is the tag regardless of namespace.
-    # 
-    # Also, `#` is treated specially as a subset fo they type, so it will
-    # be used if given in the type comparison.
-    #
-    # @example
-    #   'foo' =~ '!!foo'
-    #   'foo' =~ '!<tag:foo.org/bar:foo>'
-    #   'foo' =~ '!<tag:foo.org/bar:foo>'
-    #   'foo' =~ '!!foo#alt'
-    #   'foo#alt' =~ '!!foo#alt'
-    #
-    def validate_type(ypath, spec, nodes)
-      return unless TypeValidation.applicable?(spec)
-      nodes.each do |node|
-        @validations << TypeValidation.new(ypath, spec, tree, node)
+      YES.validators.each do |validator|
+        @validations.concat(
+          validator.validate(ypath, spec, tree, nodes)
+        )
       end
-    end  
-
-    # Validate the tag. This ensure all the matching nodes have the given tag.
-    # Be sure to used quotes when starting the tag with `!`.
-    #
-    # NOTE: the tag should honer %TAG directives in the document, but as of 
-    # yet this is not supported. Thus fully qualified tags need to be used
-    # for anything beyond default !! and ! tags.
-    def validate_tag(ypath, spec, nodes)
-      return unless TagValidation.applicable?(spec)
-      nodes.each do |node|
-        @validations << TagValidation.new(ypath, spec, tree, node)
-      end
-    end
-
-#    # Validates whether a matching node must be present within it's parent.
-#    def validate_required(ypath, spec, nodes)
-#      return unless RequiredValidation.applicable?(spec)
-#      @validations << RequiredValidation.new(spec, nodes, tree)
-#    end
-
-    # Validates whether a matching node must be present within it's parent.
-    def validate_requires(ypath, spec, nodes)
-      return unless RequiresValidation.applicable?(spec)
-      nodes.each do |node|
-        @validations << RequiresValidation.new(ypath, spec, tree, node)
-      end
-    end
-
-    # Validate inclusion - This can either be a boolean expression in
-    # which case it validates that there is at least one matching
-    # node. Otherwise, the value is taken to be a ypath and validates
-    # that there are matching paths if the main selection is present.
-    def validate_inclusive(ypath, spec, nodes)
-      return unless InclusiveValidation.applicable?(spec)
-      @validations << InclusiveValidation.new(ypath, spec, tree, nodes)
-    end
-
-    # Validate exclusion - This can either be a boolean expression in
-    # which case it validates that there is no more than one matching
-    # node. Otherwise, the value is taken to be a ypath and validates
-    # that there are no matching paths if the main selection is present.
-    def validate_exclusive(ypath, spec, nodes)
-      return unless ExclusiveValidation.applicable?(spec)
-      @validations << ExclusiveValidation.new(ypath, spec, tree, nodes)
-    end
-
-    # Validate count ensure there is a minimum and/or maximum
-    # number of matching nodes.
-    def validate_count(ypath, spec, nodes)
-      return unless CountValidation.applicable?(spec)
-      @validations << CountValidation.new(ypath, spec, tree, nodes)
     end
 
     ## Validate if a node is the only one of it's value in a sequence
@@ -151,53 +71,7 @@ module YES
     #  # TODO: how to do?
     #end
 
-    # Validate if a node value is within a certain length.
-    # The value is converted to a string using #to_s for the
-    # comparison.
-    def validate_length(ypath, spec, nodes)
-      return unless LengthValidation.applicable?(spec)
-      nodes.each do |node|
-        @validations << LengthValidation.new(ypath, spec, tree, node)
-      end
-    end
-
-    # Validate if a node is the only one of it's value in a sequence
-    # or mapping.
-    def validate_range(ypath, spec, nodes)
-      return unless RangeValidation.applicable?(spec)
-      nodes.each do |node|
-        @validations << RangeValidation.new(ypath, spec, tree, node)
-      end
-    end
-
-    # Validate that a node's value is amoung a provided
-    # list of values.
-    def validate_choice(ypath, spec, nodes)
-      return unless RangeValidation.applicable?(spec)
-      nodes.each do |node|
-        @validations << ChoiceValidation.new(ypath, spec, tree, node)
-      end
-    end
-
-    # Validate matching values against a regular expression.
-    # All values are converted to strings (using #to_s) for comparison.
-    def validate_regexp(ypath, spec, nodes)
-      return unless RegexpValidation.applicable?(spec)
-      nodes.each do |node|
-        @validations << RegexpValidation.new(ypath, spec, tree, node)
-      end
-    end
-
-    # Validate file glob match. This uess standard unix-style file matching,
-    # primarily '*` and `?`, to detrmine a mathing node value.
-    # All values are converted to strings (using #to_s) for comparison.
-    def validate_fnmatch(ypath, spec, nodes)
-      return unless FnmatchValidation.applicable?(spec)
-      nodes.each do |node|
-        @validations << FnmatchValidation.new(ypath, spec, tree, node)
-      end
-    end
-
+=begin
     # -- support methods --------------------------------------------------------
 
     # Covert a YAML node (Syck) node into a generic representation.
@@ -244,6 +118,7 @@ module YES
         value > $1.to_f && value > $2.to_f
       end
     end
+=end
 
   end
 

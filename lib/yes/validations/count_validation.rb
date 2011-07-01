@@ -12,14 +12,21 @@ module YES
 
     # Validate count ensure there is a minimum and/or maximum
     # number of matching nodes.
-    def valid?
-      return true unless applicable?
-      match_delta(spec['count'], nodes.size)
+    def self.validate(ypath, spec, tree, nodes)
+      return [] unless applicable?(spec)
+      [new(ypath, spec, tree, nodes)]
     end
 
     # Only applicable if `count` entry is in the spec.
     def self.applicable?(spec)
       spec['count']
+    end
+
+    # Validate count ensure there is a minimum and/or maximum
+    # number of matching nodes.
+    def valid?
+      return true unless applicable?
+      match_delta(spec['count'], nodes.size)
     end
 
   end

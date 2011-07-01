@@ -8,6 +8,22 @@ module YES
   #
   class RegexpValidation < NodeValidation
 
+    # Validate matching values against a regular expression.
+    # All values are converted to strings (using #to_s) for comparison.
+    #
+    # @return [Array<Validaiton>]
+    def self.validate(ypath, spec, tree, nodes)
+      return [] unless applicable?(spec)
+      nodes.map do |node|
+        new(ypath, spec, tree, node)
+      end
+    end
+
+    #
+    def self.applicable?(spec)
+      spec['regexp']
+    end
+
     #
     # @return [Boolean] validity
     def valid?
@@ -20,11 +36,6 @@ module YES
     # @return [Regexp] spec's regular expression
     def regexp
       @regexp ||= Regexp.new(spec['regexp'])
-    end
-
-    #
-    def self.applicable?(spec)
-      spec['regexp']
     end
 
   end

@@ -8,6 +8,18 @@ module YES
   #       keep, but for now THIS IS NOT USED.
   class RequiredValidation < TreeValidation
 
+
+    # Validates whether a matching node must be present within it's parent.
+    def self.validate(ypath, spec, nodes)
+      return [] unless applicable?(spec)
+      [new(spec, nodes, tree)]
+    end
+
+    # Only applicable if `required` field appears in spec.
+    def self.applicable?(spec)
+      spec['required']
+    end
+
     #
     # @return [Boolean] validity
     def valid?
@@ -22,11 +34,6 @@ module YES
         in_nodes = tree.select(required)
         nodes.size == 0 or in_nodes.size > 0
       end
-    end
-
-    # Only applicable if `required` field appears in spec.
-    def self.applicable?(spec)
-      spec['required']
     end
 
   end

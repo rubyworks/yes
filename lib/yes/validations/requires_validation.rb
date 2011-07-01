@@ -15,7 +15,21 @@ module YES
   # The literal meaing of this example is "if `foo` exists, the make sure
   # `foo/bar` also exists.
   #
+  # @return [Array<Validaiton>]
   class RequiresValidation < NodeValidation
+
+    # Validates whether a matching node must be present within it's parent.
+    def self.validate(ypath, spec, tree, nodes)
+      return [] unless applicable?(spec)
+      nodes.map do |node|
+        new(ypath, spec, tree, node)
+      end
+    end
+
+    #
+    def self.applicable?(spec)
+      spec['requires']
+    end
 
     #
     # @return [Boolen] validity
@@ -34,11 +48,6 @@ module YES
         return false unless rq_nodes.size > 0
       end
 
-    end
-
-    #
-    def self.applicable?(spec)
-      spec['requires']
     end
 
   end
