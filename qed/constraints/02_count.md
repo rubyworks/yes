@@ -101,7 +101,7 @@ TODO: more detailed assertions on returned errors list.
 The above covers the basics of count constraints. The following
 will test a large set of count scenarios stored in [count.yml](count.yml).
 
-    Table('count.yml', :stream=>true) do |set|
+    Table('fixtures/count.yml', :stream=>true) do |set|
       yes = YES::Lint.new(set['schema'])
       errors = yes.validate(set['data'])
       errors.assert == set['assert']
