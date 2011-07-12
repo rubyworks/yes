@@ -36,7 +36,7 @@ Given a schema with a `length` constraint using a fixed range:
 
     ---
     //foo:
-      count: 1..2
+      length: 1..2
 
 And a YAML document that has that range of nodes:
 
@@ -69,7 +69,7 @@ to `n`, respesenting infinity:
 
     ---
     //foo:
-      count: 2..n
+      length: 2..n
 
 And a YAML document that has such a range of nodes:
 

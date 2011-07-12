@@ -4,12 +4,12 @@ Given a schema with a `type` constraint:
 
     ---
     //name:
-      tag: `<tag:yes.com,2011:name>`
+      tag: '<tag:yes.com,2011:name>'
 
 And a YAML document that has matching nodes:
 
     ---
-    - name: !<tag:yes.com,2011:name> Choo Choo Train
+    - name: !!<tag:yes.com,2011:name> Choo Choo Train
 
 Then validation of the YAML document with the schema will
 be valid and retun no validation errors.

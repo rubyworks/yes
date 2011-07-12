@@ -21,20 +21,20 @@ module YES
 
     #
     def initialize(schema)
-      @schema = YAML.load(schema)
-      @validations = []
+      @schema    = YAML.load(schema)
+      @checklist = []
     end
 
     #
     def validate(yaml)
-      @tree = YAML.parse(yaml)
-      @validations = []
+      @tree      = YAML.parse(yaml)
+      @checklist = []
 
       @schema.each do |ypath, spec|
         validate_ypath(ypath, spec)
       end
 
-      @validations.reject{ |v| v.valid? }
+      @checklist.reject{ |v| v.valid? }
     end
 
     #
@@ -55,12 +55,30 @@ module YES
     #
     # FIXME: Add logic handling.
     def validate_spec(ypath, spec)
-      nodes = @tree.select(ypath)
+      nodes = select_nodes(ypath)
 
-      YES.validators.each do |validator|
-        @validations.concat(
-          validator.validate(ypath, spec, tree, nodes)
+      YES.constraints.each do |c|
+        @checklist.concat(
+          c.checklist(spec, tree, nodes)
         )
+      end
+    end
+
+    #
+    def select_nodes(ypath)
+      case ypath
+      when Hash
+        nodes = []
+        tree.select('*') # all nodes
+        YES.validators.each do |c|
+          next unless Constraints::NodeConstraint === c
+          applicable = c.validate(ypath, spec, tree, nodes)
+          selection  = applicable.select{ |v| v.valid? }
+          nodes.concat(selection.map{ |s| s.node })
+        end
+        nodes
+      else
+        tree.select(ypath)
       end
     end
 

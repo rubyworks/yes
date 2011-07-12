@@ -21,7 +21,7 @@ be valid and retun no validation errors.
 If given a YAML document that lacks matching nodes: 
 
     ---
-    - foo: foo.txt
+    - path: foo.txt
 
 Then the validation will return errors.
 

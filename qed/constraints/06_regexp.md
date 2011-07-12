@@ -18,13 +18,14 @@ Then validation of the YAML document with the schema will
 be valid and retun no validation errors.
 
     yes = YES::Lint.new(@schema)
+
     errors = yes.validate(@yaml)
     errors.assert.empty?
 
 If given a YAML document that lacks matching nodes: 
 
     ---
-    - foo: 15907
+    - email: 15907
 
 Then the validation will return errors.
 

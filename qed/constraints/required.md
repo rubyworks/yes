@@ -3,7 +3,7 @@
 Given a schema with a `required` constraint:
 
     ---
-    /foo:
+    //foo:
       required: true
 
 And a YAML document that hasthe required path:

@@ -13,20 +13,20 @@ end
 #
 require 'yaml'
 
-require 'yes/validations/abstract_validation'
-require 'yes/validations/node_validation'
-require 'yes/validations/tree_validation'
+require 'yes/constraints/abstract_constraint'
+require 'yes/constraints/node_constraint'
+require 'yes/constraints/tree_constraint'
 
-require 'yes/validations/tag_validation'
-require 'yes/validations/type_validation'
-require 'yes/validations/count_validation'
-require 'yes/validations/length_validation'
-require 'yes/validations/range_validation'
-require 'yes/validations/regexp_validation'
-require 'yes/validations/fnmatch_validation'
-require 'yes/validations/requires_validation'
-require 'yes/validations/inclusive_validation'
-require 'yes/validations/exclusive_validation'
+require 'yes/constraints/tag'
+require 'yes/constraints/type'
+require 'yes/constraints/count'
+require 'yes/constraints/length'
+require 'yes/constraints/range'
+require 'yes/constraints/regexp'
+require 'yes/constraints/fnmatch'
+require 'yes/constraints/requires'
+require 'yes/constraints/inclusive'
+require 'yes/constraints/exclusive'
 
 require 'yes/lint'
 
