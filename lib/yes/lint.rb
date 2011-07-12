@@ -27,19 +27,20 @@ module YES
 
     #
     def validate(yaml)
-      @tree      = YAML.parse(yaml)
       @checklist = []
 
+      tree = YAML.parse(yaml)
+
       @schema.each do |ypath, spec|
-        validate_ypath(ypath, spec)
+        validate_ypath(ypath, spec, tree)
       end
 
       @checklist.reject{ |v| v.valid? }
     end
 
     #
-    def validate_ypath(ypath, spec)
-      validate_spec(ypath, spec)
+    def validate_ypath(ypath, spec, tree)
+      validate_spec(ypath, spec, tree)
 
       # TODO: how to handle sub-paths?
       #spec.each do |r, s|
@@ -54,8 +55,8 @@ module YES
     # Process all validations.
     #
     # FIXME: Add logic handling.
-    def validate_spec(ypath, spec)
-      nodes = select_nodes(ypath)
+    def validate_spec(ypath, spec, tree)
+      nodes = select_nodes(ypath, tree)
 
       YES.constraints.each do |c|
         @checklist.concat(
@@ -64,16 +65,19 @@ module YES
       end
     end
 
-    #
-    def select_nodes(ypath)
+    # TODO: Mayb this should be a class method, too ?
+    def select_nodes(ypath, tree)
       case ypath
       when Hash
-        nodes = []
-        tree.select('*') # all nodes
-        YES.validators.each do |c|
+        if path = ypath['path'] || ypath['ypath']
+          nodes = tree.select(path)
+        else
+          nodes = tree.select('*') # all nodes
+        end
+        YES.constraints.each do |c|
           next unless Constraints::NodeConstraint === c
-          applicable = c.validate(ypath, spec, tree, nodes)
-          selection  = applicable.select{ |v| v.valid? }
+          checklist = c.checklist(spec, tree, nodes)
+          selection = checklist.select{ |v| v.valid? }
           nodes.concat(selection.map{ |s| s.node })
         end
         nodes
