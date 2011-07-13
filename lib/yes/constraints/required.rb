@@ -12,7 +12,7 @@ module YES
     class Required < TreeConstraint
 
       #
-      # @return [Array<Validaiton>]
+      # @return [Array<Constraint>]
       def self.checklist(spec, tree, nodes)
         return [] unless applicable?(spec)
         [new(spec, tree, nodes)]
@@ -26,9 +26,7 @@ module YES
       # Validates whether a matching node must be present within it's parent.
       #
       # @return [Boolean] validity
-      def valid?
-        return true unless applicable?
-
+      def validate(spec)
         required = spec['required']
 
         case required

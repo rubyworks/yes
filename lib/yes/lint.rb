@@ -1,6 +1,6 @@
 module YES
 
-  # YAML Easy Schema
+  # YAML Easy Schema - Constrain Validator ("Lint")
   #
   # Issues
   #
@@ -10,14 +10,14 @@ module YES
   #
   class Lint
 
-    #
+    # The schema document.
     attr :schema
 
-    #
-    attr :tree
+    # The tree, which is populate when #validate is called.
+    #attr :tree
 
-    #
-    attr :validations
+    # The constraint checklist.
+    attr :checklist
 
     #
     def initialize(schema)
@@ -25,6 +25,12 @@ module YES
       @checklist = []
     end
 
+    #
+    # @param [String] yaml
+    #   A YAML document.
+    #
+    # @return [Array]
+    #   List of constraints that were invalid.
     #
     def validate(yaml)
       @checklist = []
@@ -42,14 +48,13 @@ module YES
     def validate_ypath(ypath, spec, tree)
       validate_spec(ypath, spec, tree)
 
-      # TODO: how to handle sub-paths?
-      #spec.each do |r, s|
-      #  if r[0,1] =~ /\W/
-      #    rel_ypath = ypath + r
-      #    rel_spec  = s
-      #    validate_ypath(rel_ypath, rel_spec)
-      #  end
-      #end
+      ## handle sub-paths
+      if spec['map']
+        spec['map'].each do |sub_path, sub_spec|
+          sub_ypath = ypath + '/' + sub_path
+          validate_ypath(sub_ypath, sub_spec, tree)
+        end
+      end
     end
 
     # Process all validations.
@@ -59,13 +64,11 @@ module YES
       nodes = select_nodes(ypath, tree)
 
       YES.constraints.each do |c|
-        @checklist.concat(
-          c.checklist(spec, tree, nodes)
-        )
+        @checklist.concat(c.checklist(spec, tree, nodes))
       end
     end
 
-    # TODO: Mayb this should be a class method, too ?
+    # TODO: Maybe this should be a class method, too ?
     def select_nodes(ypath, tree)
       case ypath
       when Hash

@@ -9,7 +9,7 @@ module YES
     class Choice < NodeConstraint
 
       #
-      # @return [Array<Validaiton>]
+      # @return [Array<Constraint>]
       def self.checklist(spec, tree, nodes)
         return [] unless applicable?(spec)
         nodes.map do |node|
@@ -26,15 +26,9 @@ module YES
       # list of values.
       #
       # @return [Boolean] validity
-      def valid?
-        return true unless applicable?
+      def validate(spec)
+        choice = Array(spec['choice'])
         choice.include?(node.transform)
-      end
-
-      #
-      # @return [String] selection list
-      def choice
-        Array(spec['choice'])
       end
 
     end

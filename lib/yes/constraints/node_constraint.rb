@@ -42,6 +42,12 @@ module YES
 #      n
 #    end
 
+      #
+      #
+      def self.applicable?(spec)
+        false
+      end
+
     end
 
   end

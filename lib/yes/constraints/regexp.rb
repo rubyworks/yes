@@ -28,24 +28,21 @@ module YES
       # All values are converted to strings (using #to_s) for comparison.
       #
       # @return [Boolean] validity
-      def valid?
-        return true unless applicable?
+      def validate(spec)
+        regexp = parse_regexp(spec['regexp'])
         regexp =~ node.value ? true : false
       end
 
       # The regular expression from `spec`.
       #
       # @return [Regexp] spec's regular expression
-      def regexp
-        @regexp ||= (
-          re = spec['regexp']
-          case re
-          when /^\/(.*?)\/(\w*)$/
-            ::Regexp.new($1)  # TODO: modifiers
-          else
-            ::Regexp.new(re)
-          end
-        )
+      def parse_regexp(re)
+        case re
+        when /^\/(.*?)\/(\w*)$/
+          ::Regexp.new($1)  # TODO: modifiers
+        else
+          ::Regexp.new(re)
+        end
       end
 
     end

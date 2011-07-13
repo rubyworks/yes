@@ -13,7 +13,7 @@ module YES
     class Count < TreeConstraint
 
       #
-      # @return [Array<Validaiton>]
+      # @return [Array<Constraint>]
       def self.checklist(spec, tree, nodes)
         return [] unless applicable?(spec)
         [new(spec, tree, nodes)]
@@ -26,9 +26,9 @@ module YES
 
       # Validate count ensure there is a minimum and/or maximum
       # number of matching nodes.
-      def valid?
-        return true unless applicable?
-        match_delta(spec['count'], nodes.size)
+      def validate(spec)
+        count = spec['count']
+        match_delta(count, nodes.size)
       end
 
     end

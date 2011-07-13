@@ -12,7 +12,7 @@ module YES
     class Inclusive < TreeConstraint
 
       #
-      # @return [Array<Validaiton>]
+      # @return [Array<Constraint>]
       def self.checklist(spec, tree, nodes)
         return [] unless applicable?(spec)
         [new(spec, tree, nodes)]

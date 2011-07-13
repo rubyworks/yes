@@ -20,7 +20,7 @@ module YES
     class Type < NodeConstraint
 
       #
-      # @return [Array<Validaiton>]
+      # @return [Array<Constraint>]
       def self.checklist(spec, tree, nodes)
         return [] unless applicable?(spec)
         nodes.map do |node|
@@ -35,8 +35,7 @@ module YES
 
       # Validate type.
       #
-      def valid?
-        return true unless applicable?
+      def validate(spec)
         type_match(node, spec['type'])
       end
 

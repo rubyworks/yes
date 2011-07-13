@@ -16,12 +16,10 @@ module YES
     #
     # The literal meaing of this example is "if `foo` exists, the make sure
     # `foo/bar` also exists.
-    #
-    # @return [Array<Validaiton>]
     class Requires < NodeConstraint
 
       #
-      # @return [Array<Validaiton>]
+      # @return [Array<Constraint>]
       def self.checklist(spec, tree, nodes)
         return [] unless applicable?(spec)
         nodes.map do |node|
@@ -37,9 +35,7 @@ module YES
       # Validates whether a matching node must be present within it's parent.
       #
       # @return [Boolen] validity
-      def valid?
-        return true unless applicable?
-
+      def validate(spec)
         requires = Array(spec['requires'])
 
         requires.each do |rq|

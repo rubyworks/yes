@@ -31,15 +31,9 @@ module YES
       # or mapping.
       #
       # @return [Boolean] validity
-      def valid?
-        return true unless applicable?
-        return true if match_delta(range, node.transform)
-        false
-      end
-
-      #
-      def range
-        spec['range']
+      def validate(spec)
+        range = spec['range']
+        match_delta(range, node.transform) ? true : false
       end
 
     end

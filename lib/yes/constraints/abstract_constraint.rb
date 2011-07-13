@@ -40,9 +40,22 @@ module YES
       #
       attr :tree
 
+      # MUST OVERRIDE THIS METHOD IN SUBCLASSES
       #
-      def valid?
-        raise "undefined method -- `valid?'"
+      def validate(spec)
+        raise "undefined method -- `validate'"
+      end
+
+      # MUST OVERRIDE THIS METHOD IN SUBCLASSES
+      #
+      def self.applicable?(spec)
+        raise "undefined class method -- `applicable?'"
+      end
+
+      #
+      def valid? 
+        return true unless applicable?
+        recurse_valid?(spec)
       end
 
       #
@@ -50,12 +63,18 @@ module YES
         self.class.applicable?(spec)
       end
 
-      #
-      def self.applicable?(spec)
-        raise "undefined class method -- `applicable?'"
-      end
-
     private
+
+      #
+      def recurse_valid?(spec=nil)
+        spec ||= self.spec
+        case spec
+        when Array  # logical-or
+          spec.any?{ |sub_spec| recurse_valid?(sub_spec) }
+        else
+          validate(spec)
+        end
+      end
 
       # Range matching is used by a couple of validators.
       #

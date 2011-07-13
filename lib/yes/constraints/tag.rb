@@ -13,7 +13,7 @@ module YES
     class Tag < NodeConstraint
 
       #
-      # @return [Array<Validaiton>]
+      # @return [Array<Constraint>]
       def self.checklist(spec, tree, nodes)
         return [] unless applicable?(spec)
         nodes.map do |node|
@@ -29,9 +29,9 @@ module YES
       # Validate the tag.
       #
       # @return [Boolean] validity
-      def valid?
-        return true unless applicable?
-        match_tag(spec['tag'], node)
+      def validate(spec)
+        tag = spec['tag']
+        match_tag(tag, node)
       end
 
       private

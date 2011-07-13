@@ -6,12 +6,12 @@ module YES
     # primarily '*` and `?`, to detrmine a mathing node value.
     # All values are converted to strings (using #to_s) for comparison.
     #--
-    # TODO: better name then `Fnmatch`?
+    # TODO: better name then `FNMatch`?
     #++
     class FNMatch < NodeConstraint
 
       #
-      # @return [Array<Validaiton>]
+      # @return [Array<Constraint>]
       def self.checklist(spec, tree, nodes)
         return [] unless applicable?(spec)
         nodes.map do |node|
@@ -29,15 +29,10 @@ module YES
       # All values are converted to strings (using #to_s) for comparison.
       #
       # @return [Boolean] validity
-      def valid?
-        return true unless applicable?
-        File.fnmatch(fnmatch, node.value)
-      end
+      def validate(spec)
+        fnmatch = spec['fnmatch']
 
-      #
-      # @return [String] fnmatch pattern
-      def fnmatch
-        spec['fnmatch']
+        File.fnmatch(fnmatch, node.value)
       end
 
     end

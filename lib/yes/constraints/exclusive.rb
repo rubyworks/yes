@@ -12,7 +12,7 @@ module YES
     class Exclusive < TreeConstraint
 
       #
-      # @return [Array<Validaiton>]
+      # @return [Array<Constraint>]
       def self.checklist(spec, tree, nodes)
         return [] unless applicable?(spec)
         [new(spec, tree, nodes)]
@@ -29,9 +29,7 @@ module YES
       # that there are no matching paths if the main selection is present.
       #
       # @return [Boolean] validity
-      def valid?
-        return true unless applicable?
-
+      def validate(spec)
         exclusive = spec['exclusive']
 
         case exclusive
