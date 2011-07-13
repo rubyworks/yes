@@ -1,5 +1,6 @@
 .yardoc
 log
 doc
+pkg
 tmp
 QED.rdoc

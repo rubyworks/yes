@@ -78,6 +78,7 @@ files:
 homepage: http://rubyworks.github.com/yes
 licenses: 
 - BSD-2-Clause
+- BSD-2-Clause
 post_install_message: 
 rdoc_options: 
 - --title
