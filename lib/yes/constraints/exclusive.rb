@@ -2,7 +2,7 @@ module YES
 
   module Constraints
 
-    # Validate exclusion. This can either be a boolean expression in
+    # Exclusion - This can either be a boolean expression in
     # which case it validates that there is no more than one matching
     # node. Otherwise, the value is taken to be a ypath and validates
     # that there are no matching paths if the main selection is present.

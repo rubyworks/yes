@@ -9,7 +9,7 @@ Copyright:: (c) 2011 Thomas Sawyer, Rubyworks
 
 It doesn't get any easier than this!
 
-YES is a schema system for YAML that is intuitve and extremely powerful.
+YES is a schema system for YAML that is intuitive and extremely powerful.
 
 YES Schemas are also YAML documents, so they eat there own dog food.
 
@@ -54,10 +54,10 @@ Would satisfy the schema. But,
 
 Would not.
 
-TODO: Better Eaxamples!!!
+TODO: Better Examples!!!
 
 Sometimes multiple constraints of the same type need to be applied to 
-a set of nodes. This can be done by rexpessing the same YPath with 
+a set of nodes. This can be done by expressing the same YPath with 
 different constraints, for example:
 
     people/*/name:
@@ -65,7 +65,7 @@ different constraints, for example:
     people/*/name:
       regexp: '[^/n]'
 
-But to make the inent more sussinct a sequence of constraints can be give
+But to make the intent more succinct a sequence of constraints can be give
 along with the *logical-and* tag , `!!and`.
 
     people/*/name: !!and
@@ -113,21 +113,21 @@ Try it on `sample.yaml`.
 
 Using the executable.
 
-    $ yaml-yes schema.yes sample.yaml
+    $ yes-lint schema.yes sample.yaml
 
 In code that is:
 
     require 'yes'
 
-    yes = YES.new(File.new('schema.yes'))
+    lint = YES::Lint.new(File.new('schema.yes'))
 
-    yes.validate(File.new('sample.yaml'))
+    lint.validate(File.new('sample.yaml'))
 
 
 == CONTRIBUTE
 
 Come on folks! Let's get YAML up to snuff. A good Schema could really
-help YAML go the distance and penetrate some of those "Enterpisy" worlds.
+help YAML go the distance and penetrate some of those "Enterprisey" worlds.
 
 * Please read, write and comment on issues[https://github.com/rubyworks/yes/issues].
 * Please critique the code.

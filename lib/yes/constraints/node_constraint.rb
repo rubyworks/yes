@@ -2,13 +2,13 @@ module YES
 
   module Constraints
 
-    # The NodeValidation class is an abstract class
-    # and used for create validation subclasses that
+    # The NodeConstraint class is an abstract class
+    # and used for create constraint subclasses that
     # apply constraints on a sigle node.
     #
     class NodeConstraint < AbstractConstraint
 
-      # Like {AbstractValidation#initialize} but takes a `node` qas well.
+      # Like {Abstract#initialize} but takes a `node` qas well.
       def initialize(spec, tree, node)
         super(spec, tree, [node])
         @node = node
