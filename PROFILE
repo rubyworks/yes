@@ -1,7 +1,6 @@
 ---
-name: yes
-title: YES
-version: 0.0.1
+name: "yes"
+title: "YES"
 
 summary: YAML Easy Schema
 license: BSD-2-Clause

@@ -1,12 +1,12 @@
 --- 
-name: "true"
+name: "yes"
 version: 0.0.1
-title: "true"
+title: "YES"
 summary: YAML Easy Schema
 description: YAML Easy Schemas it a straight-foward but powerful YPath-based schema format and validation program for YAML documents.
 loadpath: 
 - lib
-manifest: Manifest.txt
+manifest: MANIFEST
 requires: 
 - name: qed
   version: 0+

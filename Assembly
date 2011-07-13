@@ -15,15 +15,15 @@ yard:
 
 qedoc:
   title  : YES
-  files  : qed/**/*.md
+  files  : spec/**/*.md
   output : QED.rdoc
 
 qed:
-  files    : qed/**/*.md
+  files    : spec/
   loadpath : [lib]
   requires : ~
-  live     : false   
-  active   : false
+  #live     : false   
+  active   : true
 
 email:
   service : Email

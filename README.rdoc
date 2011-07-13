@@ -2,14 +2,14 @@
 
 Author:: Thomas Sawyer
 License:: BSD-2-Clause
-Copyright:: (c) 2011 Rubyworks, Thomas Sawyer
+Copyright:: (c) 2011 Thomas Sawyer, Rubyworks
 
 
 == SALES PITCH
 
 It doesn't get any easier than this!
 
-YES is a schema system for YAML that intuitve and extremely powerful.
+YES is a schema system for YAML that is intuitve and extremely powerful.
 
 YES Schemas are also YAML documents, so they eat there own dog food.
 
