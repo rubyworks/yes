@@ -1,4 +1,4 @@
-== YPath Type
+## YPath by Tag
 
 Given a YAML document:
 
@@ -8,7 +8,7 @@ Given a YAML document:
       foo: "foo2"
       baz: "baz"
 
-Lets let try out some YPaths.
+It would be nice if we could select nodes by tag, like:
 
     s = @yaml.select('!example')
 
@@ -16,4 +16,6 @@ Lets let try out some YPaths.
 
     s1 = s.first
     s1.type.assert == "map"
+
+But this does not work at this time.
 

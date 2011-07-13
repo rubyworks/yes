@@ -1,4 +1,4 @@
-= YPath Index
+## YPath Index
 
 Given a YAML document:
 
