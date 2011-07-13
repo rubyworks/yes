@@ -18,14 +18,14 @@ module YES
       def self.checklist(spec, tree, nodes)
         return [] unless applicable?(spec)
 
-        vspec = spec['value']
-        list  = []
+        key_spec = spec['key']
+        list     = []
 
         nodes.each do |node|
           case node.kind
-          when 'map'
+          when :map
             YES.constraints.each do |c|
-              list.concat(c.checklist(vspec, tree, node.value.keys))
+              list.concat(c.checklist(key_spec, tree, node.value.keys))
             end
           else
             raise "key constraint applies only to mappings"
@@ -38,7 +38,7 @@ module YES
       #
       #
       def self.applicable?(spec)
-        spec['value']
+        spec['key']
       end
 
       #
