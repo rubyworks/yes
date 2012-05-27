@@ -5,25 +5,23 @@ gem:
 github: {}
 
 dnote:
-  service  : DNote
-  labels   : ~
-  output   : log/DNOTE.md
+  title: Source Notes
+  labels: ~
+  output: log/notes.html
 
 yard:
   yardopts: true
   priority: -1
 
 qedoc:
-  title  : YES
-  files  : spec/**/*.md
-  output : QED.rdoc
+  title:  YES
+  files:  demo/**/*.md
+  output: DEMOS.md
 
 qed:
-  files    : spec/
-  loadpath : [lib]
-  requires : ~
-  #live     : false   
-  active   : true
+  files: demo/
+  loadpath: [lib]
+  requires: ~
 
 email:
   service : Email
