@@ -1,11 +1,7 @@
-= YES - YAML Easy Schema
+YES - YAML Easy Schema
+======================
 
-Author:: Thomas Sawyer
-License:: BSD-2-Clause
-Copyright:: (c) 2011 Thomas Sawyer, Rubyworks
-
-
-== SALES PITCH
+## SALES PITCH
 
 It doesn't get any easier than this!
 
@@ -14,56 +10,52 @@ YES is a schema system for YAML that is intuitive and extremely powerful.
 YES Schemas are also YAML documents, so they eat there own dog food.
 
 
-== HOW IT WORKS
+## HOW IT WORKS
 
 The design of YeS is as simple as it is powerful. A YeS schema is composed
-of YPath selectors mapped to document constraints. YPath is a syntax
+of YPath selectors mapped to document specifications. A YeS document can
+be either a mapping or a sequence of such specifications. YPath is a syntax
 for selecting *nodes* from a YAML document.
 
 When validating a YAML document against a YeS schema a "lint" program
 simply collects all matching nodes with their applicable constraints into
 a collection of *unit-validations*. Then this collection is filtered of 
-all *passing* validations. All that is left are the failures. If the filtered
-list is empty the document is completely valid. If not empty, the lint
-program can provide a detailed *editorial* list of the failures.
+all *passing* validations. All that is left are the failures. If the 
+filtered list is empty the document is completely valid. If not empty,
+the lint program can provide a detailed *editorial* list of the failures.
 
-Constraints are given as a mappings of validation type to validation
-parameters.
+Specification are generally constraints which limit possible entires in
+the document. But they also can be specifiers which instruct parsers how
+to interpret a document based on it's structure (as opposed to document tags).
 
-Lets take an example:
+Lets take an example schema:
 
     people/*/name:
       regexp: '[^/n]'
 
 This simple schema selects all nodes under a `people` sequence of
 mappings with a name key, the value of which cannot contain newlines.
-In other words:
+In other words, this would satisfy the schema:
 
-    --
     people:
       - name: Charlie Adams
       - name: Julie Ann Rose
 
-Would satisfy the schema. But,
+But this would not:
 
-    --
     people:
       - name: |
           Charlie
           Adams
 
-Would not.
-
-TODO: Better Examples!!!
-
 Sometimes multiple constraints of the same type need to be applied to 
 a set of nodes. This can be done by expressing the same YPath with 
 different constraints, for example:
 
-    people/*/name:
-      regexp: '[^/t]'
-    people/*/name:
-      regexp: '[^/n]'
+    - people/*/name:
+        regexp: '[^/t]'
+    - people/*/name:
+        regexp: '[^/n]'
 
 But to make the intent more succinct a sequence of constraints can be give
 along with the *logical-and* tag , `!!and`.
@@ -81,20 +73,28 @@ If the `!!and` tag is not given, then the default operator is used,
 
 In this way logical relationships of constraints can be created.
 
-    people/*/name: !!or
+    people/*/password: !!or
       - !!and
-        - regexp: '[^/t]'
-        - regexp: '[^/n]'
+        - regexp: '[^/s]'
+        - regexp: '\w'
+        - regexp: '\d'
       - !!and
-        - regexp: '[^/t]'
-        - regexp: '[^/n]'
+        - regexp: '[^/s]'
+        - regexp: '\w'
+        - regexp: '\W'
+
+(Of course these examples can be better handled via more sophisticated regular
+expressions, but the intent is only to show that logical operations are possible.)
+
+In these example we have only shown examples of `regexp` contraint, but there are
+many other types including: *count*, *length*, *required*, *tag*, *value*, etc.
 
 
-== COMMAND LINE
+## COMMAND LINE
 
 To use on the command line *lint* tool. Say we have a `schema.yes` file:
 
-    ---
+    --- !!yes
     name:
       type: str
       regexp: '[^\n]'
@@ -124,7 +124,14 @@ In code that is:
     lint.validate(File.new('sample.yaml'))
 
 
-== CONTRIBUTE
+## TODO
+
+* We need a tag specifier as opposed to a tag constraint, i.e. "is tag" vs. "has tag".
+  This way a schema can specify that certain nodes should be interpreted as if they
+  had such-and-such tag, as opposed to saying they must have such-and-such tag.
+
+
+## CONTRIBUTE
 
 Come on folks! Let's get YAML up to snuff. A good Schema could really
 help YAML go the distance and penetrate some of those "Enterprisey" worlds.
@@ -137,8 +144,11 @@ And please contribute to {Rubyworks Ruby Development Fund}[http://rubyworks.gith
 so us poor Ruby OSS developers can eat :)
 
 
-== COPYRIGHT
+## COPYRIGHT
 
-(BSD-2 license)
+Copyright (c) 2011 Rubyworks 
 
-Copyright (c) 2011 Rubyworks, Thomas Sawyer
+[BSD-2 License](LICENSE.txt)
+
+See LICENSE.txt for details.
+

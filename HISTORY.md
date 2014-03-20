@@ -1,6 +1,6 @@
-= RELEASE HISTORY
+# RELEASE HISTORY
 
-== HEAD / 2011-07-02
+## HEAD / 2011-07-02
 
 Current Development (7rans)
 
