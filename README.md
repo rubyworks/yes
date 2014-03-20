@@ -12,30 +12,47 @@ YES Schemas are also YAML documents, so they eat there own dog food.
 
 ## HOW IT WORKS
 
-The design of YeS is as simple as it is powerful. A YeS schema is composed
-of YPath selectors mapped to document specifications. A YeS document can
-be either a mapping or a sequence of such specifications. YPath is a syntax
+The design of YES is as simple as it is powerful. A YES schema is composed
+of YPath selectors mapped to document constraints. A YES document can
+be either a mapping or a sequence of such constraints. YPath is a syntax
 for selecting *nodes* from a YAML document.
 
-When validating a YAML document against a YeS schema a "lint" program
+When validating a YAML document against a YES schema a "lint" program
 simply collects all matching nodes with their applicable constraints into
 a collection of *unit-validations*. Then this collection is filtered of 
 all *passing* validations. All that is left are the failures. If the 
 filtered list is empty the document is completely valid. If not empty,
 the lint program can provide a detailed *editorial* list of the failures.
 
-Specification are generally constraints which limit possible entires in
-the document. But they also can be specifiers which instruct parsers how
-to interpret a document based on it's structure (as opposed to document tags).
+In general, contraints limit the possible nodes in a document. Some
+contraints are *specifiers* which instruct parsers how to interpret a
+document based on it's structure (as opposed to document tags).
+
+
+## Note About miniKanren
+
+Although YES was conceived of and partially implemented before we
+ever heard of [miniKanren](http://minikanren.org/), it later become
+apparent that YES is essentially a DSL variant on miniKanren for the
+specific purpose of creating schema for YAML documents. This presents
+a rather fruitful possibility that core logic of miniKanren implementations,
+already in the wild, could be used as a basis for creating YES implementations.
+
+
+## Examples
 
 Lets take an example schema:
 
     people/*/name:
+      implicit: !name
       regexp: '[^/n]'
 
 This simple schema selects all nodes under a `people` sequence of
-mappings with a name key, the value of which cannot contain newlines.
-In other words, this would satisfy the schema:
+mappings with a `name` key, the value of which cannot contain newlines
+due to the `regex` constraint, and should be parsed with implcit tag
+of `!name`, as specified by the `implicit` constraint.
+
+The following document would satisfy the schema:
 
     people:
       - name: Charlie Adams
@@ -57,37 +74,43 @@ different constraints, for example:
     - people/*/name:
         regexp: '[^/n]'
 
-But to make the intent more succinct a sequence of constraints can be give
-along with the *logical-and* tag , `!!and`.
+But to make the intent more succinct a sequence of constraints instead of
+a mapping can be given.
+
+    people/*/name:
+      - regexp: '[^/t]'
+      - regexp: '[^/n]'
+
+This construct implies *logical-and* relation. This can be explicitly given
+with a `!!and` tag.
 
     people/*/name: !!and
       - regexp: '[^/t]'
       - regexp: '[^/n]'
 
-If the `!!and` tag is not given, then the default operator is used, 
-*logical-or*, which can also be explicitly stated as `!!or`:
+Which as you may have guessed means `!!or` can be used to explicity create a
+*logical-or* constraint relation:
 
     people/*/name: !!or
       - regexp: '[^/t]'
       - regexp: '[^/n]'
 
-In this way logical relationships of constraints can be created.
+In this way complex logical relationships of constraints can be created.
 
-    people/*/password: !!or
+    people/*/login: !!or
       - !!and
-        - regexp: '[^/s]'
-        - regexp: '\w'
-        - regexp: '\d'
+        - implicit: !id
+        - regexp: '^\d+$'
       - !!and
-        - regexp: '[^/s]'
-        - regexp: '\w'
-        - regexp: '\W'
+        - implicit: !name
+        - regexp: '^\w+$'
 
 (Of course these examples can be better handled via more sophisticated regular
 expressions, but the intent is only to show that logical operations are possible.)
 
-In these example we have only shown examples of `regexp` contraint, but there are
-many other types including: *count*, *length*, *required*, *tag*, *value*, etc.
+In these example we have only shown examples of `regexp` and `implicit` contraints,
+but there are many other types including: *count*, *length*, *required*, *tag*,
+*value*, etc.
 
 
 ## COMMAND LINE
