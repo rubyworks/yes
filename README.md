@@ -1,21 +1,16 @@
 YES - YAML Easy Schema
 ======================
 
-## SALES PITCH
-
-It doesn't get any easier than this!
-
-YES is a schema system for YAML that is intuitive and extremely powerful.
-
-YES Schemas are also YAML documents, so they eat there own dog food.
-
+YES is a schema system for YAML that is intuitive and powerful.
+YES schemas are also YAML documents, so it "eats its own dog food",
+as they say.
 
 ## HOW IT WORKS
 
-The design of YES is as simple as it is powerful. A YES schema is composed
-of YPath selectors mapped to document constraints. A YES document can
-be either a mapping or a sequence of such constraints. YPath is a syntax
-for selecting *nodes* from a YAML document.
+The design of YES is rather simple. A YES schema is composed of YPath
+selectors mapped to document constraints. A YES document can be either
+a mapping or a sequence of such constraints. YPath is a syntax for
+selecting *nodes* from a YAML document.
 
 When validating a YAML document against a YES schema a "lint" program
 simply collects all matching nodes with their applicable constraints into
@@ -108,9 +103,19 @@ In this way complex logical relationships of constraints can be created.
 (Of course these examples can be better handled via more sophisticated regular
 expressions, but the intent is only to show that logical operations are possible.)
 
-In these example we have only shown examples of `regexp` and `implicit` contraints,
+(NOT IMPLEMENTED YET) By preceding a subentry with slash (`/`) YES will interpret
+the entry as a continutation of the parent YPATH rather than node criteria.
+
+    - people/*:
+        /name:
+          regexp: '[^/t]'
+
+In this way schemas can often be more reflective of the the actual structure of the
+document they formailze.
+
+In the above example we have only shown examples of `regexp` and `implicit` contraints,
 but there are many other types including: *count*, *length*, *required*, *tag*,
-*value*, etc.
+*value*, etc. See the [DEMO.md](DEMO.md) file for details.
 
 
 ## COMMAND LINE
@@ -145,13 +150,6 @@ In code that is:
     lint = YES::Lint.new(File.new('schema.yes'))
 
     lint.validate(File.new('sample.yaml'))
-
-
-## TODO
-
-* We need a tag specifier as opposed to a tag constraint, i.e. "is tag" vs. "has tag".
-  This way a schema can specify that certain nodes should be interpreted as if they
-  had such-and-such tag, as opposed to saying they must have such-and-such tag.
 
 
 ## CONTRIBUTE
