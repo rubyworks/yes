@@ -1,3 +1,14 @@
+> **This project is archived and unrelated to the current `yes` gem on RubyGems.**
+>
+> As of 2026-05, the `yes` gem name on RubyGems has been transferred to
+> [Yousty](https://github.com/yousty/yes), whose `yes` gem is an event
+> sourcing framework for Ruby on Rails — a completely different project.
+>
+> This repository preserves the original `yes` gem (YAML Easy Schemas),
+> which was last released as 0.0.1 in 2011 and is no longer maintained.
+
+---
+
 YES - YAML Easy Schema
 ======================
 
